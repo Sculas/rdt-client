@@ -64,7 +64,7 @@ public class AllDebridTorrentClient(ILogger<AllDebridTorrentClient> logger, IHtt
             Added = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(torrent.UploadDate),
             Files = torrent.Links.Select((m, i) => new TorrentClientFile
             {
-                Path = GetFiles(m.Files),
+                Path = torrent.Links.Count == 1 ? torrent.Filename : GetFiles(m.Files),
                 Bytes = m.Size,
                 Id = i,
                 Selected = true,

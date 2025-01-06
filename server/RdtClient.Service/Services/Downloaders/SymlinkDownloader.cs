@@ -73,6 +73,13 @@ public class SymlinkDownloader(String uri, String destinationPath, String path) 
 
             potentialFilePaths.Add(fileName);
             potentialFilePaths.Add(fileNameWithoutExtension);
+
+            var pathDirectoryName = Path.GetDirectoryName(path);
+            if (pathDirectoryName != null)
+            {
+                potentialFilePaths.Add(pathDirectoryName);
+            }
+
             // add an empty path so we can check for the new file in the base directory
             potentialFilePaths.Add("");
 

@@ -52,14 +52,6 @@ public static class DownloadHelper
         }
         else if (torrent.Files.Count == 1)
         {
-            // Debrid servers such as RealDebrid store single file torrents in a subfolder, but AllDebrid doesn't.
-            // We should replicate this behavior so that both folder structures are equal.
-            // See issue: https://github.com/rogerfar/rdt-client/issues/648
-            if (torrent.ClientKind != Torrent.TorrentClientKind.AllDebrid)
-            {
-                torrentPath = Path.Combine(downloadPath, directory);
-            }
-            
             var torrentFile = torrent.Files[0];
             var subPath = Path.GetDirectoryName(torrentFile.Path);
             
@@ -70,6 +62,14 @@ public static class DownloadHelper
                 subPath = subPath.Trim('/').Trim('\\');
 
                 torrentPath = Path.Combine(torrentPath, subPath);
+            }
+            
+            // Debrid servers such as RealDebrid store single file torrents in a subfolder, but AllDebrid doesn't.
+            // We should replicate this behavior so that both folder structures are equal.
+            // See issue: https://github.com/rogerfar/rdt-client/issues/648
+            if (torrent.ClientKind == Torrent.TorrentClientKind.AllDebrid)
+            {
+                return torrentFile.Path;
             }
         }
 
