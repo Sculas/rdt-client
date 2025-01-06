@@ -29,12 +29,10 @@ public static class DownloadHelper
 
         fileName = FileHelper.RemoveInvalidFileNameChars(fileName);
 
-        var torrentPath = downloadPath;
+        var torrentPath = Path.Combine(downloadPath, directory);
 
         if (torrent.Files.Count > 1)
         {
-            torrentPath = Path.Combine(downloadPath, directory);
-
             var matchingTorrentFiles = torrent.Files.Where(m => m.Path.EndsWith(fileName)).Where(m => !String.IsNullOrWhiteSpace(m.Path)).ToList();
 
             if (matchingTorrentFiles.Count > 0)
